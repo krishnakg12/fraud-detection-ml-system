@@ -11,7 +11,7 @@ import gc
 # ============================================================
 # 1. CONFIGURATION
 # ============================================================
-DATA_PATH = r"D:\FraudDetection\paysim dataset.csv"
+DATA_PATH = # Enter Your Dataset Path
 COST_FN = 500   # Cost of missing a fraud ($)
 COST_FP = 50    # Cost of blocking a legit user ($)
 RANDOM_STATE = 42
