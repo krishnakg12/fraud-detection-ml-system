@@ -108,6 +108,18 @@ python src/model.py
 
 ---
 
+## 📉 Cost Optimization Curve
+
+![Cost Curve](results/cost_curve.png)
+
+The model optimizes decision threshold based on financial cost instead of accuracy.
+
+- Default threshold (0.5) is suboptimal
+- Optimal threshold (~0.09) minimizes total loss
+- Demonstrates importance of cost-sensitive learning
+
+---
+
 ## 🏗️ System Architecture
 
 ```
