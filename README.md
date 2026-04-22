@@ -1,41 +1,102 @@
 # Cost-Sensitive Real-Time Fraud Detection System
 
-This repository contains research and implementation of a real-time fraud detection system designed under extreme class imbalance and strict latency constraints.
-
-## Overview
-
-Fraud detection in financial systems presents three major challenges:
-
-* Extreme class imbalance (~0.13% fraud rate)
-* Real-time inference constraints (<50 ms latency)
-* Asymmetric cost of errors (false negatives far more expensive than false positives)
-
-This work focuses on designing a system that balances detection performance with operational and economic constraints.
+A production-oriented fraud detection system designed for **extreme class imbalance**, **low-latency inference**, and **cost-sensitive decision making** in financial transactions.
 
 ---
 
-## Research Contributions
+## 🚀 Overview
 
-### 1. Cost-Sensitive Learning Framework
+Fraud detection systems in financial domains face three core challenges:
 
-* Formulated fraud detection as a cost optimization problem instead of pure classification
-* Optimized decision thresholds based on financial loss rather than accuracy
+* Extreme class imbalance (~0.13% fraud cases)
+* Strict latency constraints (<50 ms inference)
+* Asymmetric cost of errors (false negatives are far more expensive than false positives)
 
-### 2. Hybrid Graph-Based Feature Engineering
-
-* Avoided computationally expensive Graph Neural Networks
-* Extracted relational signals (degree, PageRank) from transaction graphs
-* Integrated graph features into XGBoost for efficient inference
-
-### 3. Real-Time ML System Design
-
-* Built a microservice-based inference pipeline using FastAPI
-* Achieved sub-50 ms latency for real-time predictions
-* Designed for scalability and streaming transaction environments
+This project focuses on building a **practical machine learning system** that balances predictive performance with real-world business cost.
 
 ---
 
-## Results
+## 📂 Dataset
+
+This project uses the PaySim synthetic dataset:
+
+👉 https://www.kaggle.com/datasets/mtalaltariq/paysim-data
+
+### Dataset Description
+
+* Simulates mobile money transactions over a 30-day period
+* Based on real financial transaction patterns
+* Includes injected fraudulent behavior for evaluation
+
+### Setup
+
+Download the dataset and place it in:
+
+```
+data/paysim.csv
+```
+
+---
+
+## ⚙️ Installation
+
+```bash
+git clone https://github.com/krishnakg12/fraud-detection-ml-system.git
+cd fraud-detection-ml-system
+
+pip install -r requirements.txt
+```
+
+---
+
+## ▶️ How to Run
+
+1. Ensure dataset is placed at:
+
+```
+data/paysim.csv
+```
+
+2. Update dataset path in code (if required):
+
+```python
+DATA_PATH = "data/paysim.csv"
+```
+
+3. Run the model:
+
+```bash
+python src/model.py
+```
+
+---
+
+## 🧠 Methodology
+
+### Cost-Sensitive Learning
+
+* Optimizes decision threshold based on financial loss
+* Reduces impact of high-cost false negatives
+
+### Graph-Based Feature Engineering
+
+* Degree centrality (hub detection)
+* Transaction pair frequency
+* Historical risk scoring (time-aware, no leakage)
+
+### Model
+
+* XGBoost (GPU/CPU supported)
+* Handles imbalance using `scale_pos_weight`
+
+### Drift Detection
+
+* Page-Hinkley algorithm
+* Detects distribution shifts in streaming scenarios
+
+---
+
+## 📊 Results
 
 | Metric         | Value   |
 | -------------- | ------- |
@@ -45,85 +106,65 @@ This work focuses on designing a system that balances detection performance with
 | AUC-ROC        | 0.984   |
 | Latency        | < 50 ms |
 
-* Detected 1,154 fraudulent transactions
-* Prevented ~$1.15M in estimated financial losses
+---
+
+## 🏗️ System Architecture
+
+```
+Data Layer → Feature Engineering → ML Model → API Serving
+```
+
+* Data Layer → ingestion and preprocessing
+* ML Layer → model training and threshold optimization
+* Serving Layer → real-time inference (FastAPI-ready)
 
 ---
 
-## System Architecture
+## 📁 Repository Structure
 
-The system follows a three-tier architecture:
-
-1. Data Layer:
-
-   * Transaction ingestion
-   * Feature enrichment (graph + temporal)
-
-2. ML Layer:
-
-   * XGBoost model with cost-sensitive training
-   * Threshold optimization module
-
-3. Serving Layer:
-
-   * FastAPI-based inference service
-   * Real-time prediction and alert generation
+```
+fraud-detection-ml-system/
+│
+├── src/
+│   └── model.py
+├── data/              # dataset (not included)
+├── results/           # outputs (plots, metrics)
+├── requirements.txt
+├── README.md
+├── .gitignore
+```
 
 ---
 
-## Repository Structure
-
-* `src/` → Core ML pipeline (feature engineering, training, inference)
-* `experiments/` → Research experiments and analysis
-* `papers/` → Research papers (CIMA 2025, ICNARI 2026)
-* `results/` → Metrics and evaluation outputs
-
----
-
-## Papers
-
-1. **AI-Powered Payment Fraud Detection and Optimization System**
-
-   * Accepted at CIMA 2025 (NIT Puducherry)
-   * Publication scheduled: April 2026
-
-2. **A Systematic Review of AI-Powered Payment Fraud Detection**
-
-   * Accepted at ICNARI 2026 (NIT Patna)
-   * Analysis of 120+ research papers across ML, deep learning, and graph-based systems
-
----
-
-## Key Insights
-
-* Pure accuracy-based optimization is insufficient for real-world fraud systems
-* Graph-based features can approximate relational learning without GNN overhead
-* Cost-sensitive thresholding significantly improves business outcomes
-* Latency constraints fundamentally shape model design choices
-
----
-
-## Tech Stack
+## 🛠️ Tech Stack
 
 * Python
 * XGBoost
+* Scikit-learn
+* Pandas / NumPy
+* Matplotlib
 * FastAPI
-* NetworkX (graph features)
-* Docker (deployment-ready)
 
 ---
 
-## Future Work
+## 🔍 Key Insights
 
-* Integration with transformer-based sequence models
-* Exploration of Graph Neural Networks under optimized latency constraints
-* Adaptive learning for concept drift handling
+* Accuracy alone is misleading for fraud detection
+* Cost-sensitive optimization improves real-world outcomes
+* Graph features provide efficient relational signals
+* Latency constraints strongly influence model design
 
 ---
 
-## Author
+## 🚧 Future Work
+
+* Transformer-based sequence modeling
+* Graph Neural Networks (GNNs) under latency constraints
+* Online learning for real-time adaptation
+
+---
+
+## 👤 Author
 
 Krishna K G
 B.E. Artificial Intelligence & Machine Learning (2026)
-
----
